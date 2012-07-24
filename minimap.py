@@ -6,7 +6,6 @@ import struct
 import io
 import bmp
 import os
-import getopt
 import hashlib
 
 _PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
