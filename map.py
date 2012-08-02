@@ -314,6 +314,7 @@ class map:
         
         tempType = ""
         tempTerrType = ""
+        isResourceTypeBlock = False
         file = open(_PATH+self.MapMod+os.sep+"system.yaml")
         while 1:
             line = file.readline()
@@ -323,17 +324,20 @@ class map:
             line = self.strFixer(line)
             line = self.tabFixer(line)
             line = self.strFixer(line)
+            if line[0:13] == "ResourceType@":
+                isResourceTypeBlock = True
             if line[0:12] == "ResourceType":
                 if not line[0:13] == "ResourceType@":
+                    if not isResourceTypeBlock:
+                        continue
                     if not tempType == "":
                         if tempTerrType == "":
                             tempTerrType = "Ore"
                         self.resTypes.append( resourceType(int(tempType),tempTerrType) )
                         print "resType: " + tempType + " terrType: " + tempTerrType
                         tempTerrType = ""
-                    number = self.strFixer(line[line.find(":")+1:])
-                    if not re.match("^[A-Za-z0-9_-]*$", number):
-                        tempType = int(number)
+                    tempType = self.strFixer(line[line.find(":")+1:])
+                    isResourceTypeBlock = False
             if line[0:11] == "TerrainType":
                 if self.strFixer(line[12:]).find(" ") < 0:
                     tempTerrType = line[12:].strip()
