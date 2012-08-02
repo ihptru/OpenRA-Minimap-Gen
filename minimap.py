@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import sys
-import string
-import struct
-import io
 import os
 import hashlib
 from map import *
 import bmp
+
+# script takes path to .oramap file as an argument
+_PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
 
 def mapToBMP(pmap):
     _PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
@@ -70,9 +70,6 @@ def mapToBMP(pmap):
             img.plotPoint(x-pmap.Left,y-pmap.Top);
     return img
 
-# script takes path to .oramap file as an argument
-_PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
-
 try:
     oramap = sys.argv[1]
 except Exception as e:
@@ -93,6 +90,8 @@ text_file = open(_PATH + "info.txt", "w")
 lines = map1.getInfo();
 text_file.writelines(lines)
 text_file.close()
+
+print("Map's hash: "+hash)
 
 mapToBMP(map1).saveFile(_PATH + "minimap.bmp");
 print("minimap is saved: "+_PATH+"minimap.bmp")

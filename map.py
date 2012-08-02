@@ -1,11 +1,8 @@
-#!/usr/bin/env python
 import zipfile
-import sys
 import string
 import struct
 import io
 import os
-import re
 
 # storing terrain types
 class terrainType:
