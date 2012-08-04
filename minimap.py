@@ -9,7 +9,6 @@ import bmp
 _PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
 
 def mapToBMP(pmap):
-    _PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
     img = bmp.BitMap(pmap.Right,pmap.Bottom,bmp.Color(0,0,0));
     for x in range(pmap.Left,pmap.Right+pmap.Left):
         for y in range(pmap.Top,pmap.Bottom+pmap.Top):
@@ -96,4 +95,3 @@ print("Map's hash: "+hash)
 mapToBMP(map1).saveFile(_PATH + "minimap.bmp");
 print("minimap is saved: "+_PATH+"minimap.bmp")
 exit(0)
-
