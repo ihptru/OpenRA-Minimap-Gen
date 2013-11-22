@@ -1,3 +1,18 @@
+# Copyright 2012-2014 ihptru (Igor Popov) and Holloweye (Christer U.L)
+#
+# This file is part of OpenRA-Minimap-Gen, which is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import zipfile
 import string
 import struct
@@ -109,7 +124,6 @@ class map:
         _PATH = os.path.dirname(os.path.realpath(__file__)) + os.sep
         z = zipfile.ZipFile(filename, mode='a')
         yamlData = ""
-        bin = ""
         for filename in z.namelist():
             bytes = z.read(filename)
             if filename == "map.yaml":
@@ -154,7 +168,7 @@ class map:
         #Check so everything is ok before generating a minimap
         b = io.BytesIO(self.bin)
         if not self.Bytes2Int1(b.read(1)) == 1:
-            print "Error: Unknown map format"
+            print ("Error: Unknown map format")
             self.MapValidFormat = 0
             return;
     
@@ -205,14 +219,14 @@ class map:
                 formatOK = 1
                 self.MapMod = "d2k"
         if formatOK == 0:
-            print "Error: Unknown mod"
+            print ("Error: Unknown mod")
             self.MapValidFormat = 0
             return;
         width = self.Bytes2Int2(b.read(2));
         height = self.Bytes2Int2(b.read(2));
-        print "Path: " + filename
+        print ("Path: " + filename)
         if not os.path.isfile(filename):
-            print "Error: file does not exist"
+            print ("Error: file does not exist")
             self.MapValidFormat = 0
             return;
         
@@ -291,7 +305,6 @@ class map:
                 strG = s[0:s.find(",")]
                 tempG = int(strG)
                 s = self.strFixer(s[s.find(",")+1:])
-                strB = s;
                 if s.find(",") == -1:
                     tempB = int(s)
                 else:
@@ -333,7 +346,7 @@ class map:
                         if tempTerrType == "":
                             tempTerrType = "Ore"
                         self.resTypes.append( resourceType(int(tempType),tempTerrType) )
-                        print "resType: " + tempType + " terrType: " + tempTerrType
+                        print ("resType: " + tempType + " terrType: " + tempTerrType)
                         tempTerrType = ""
                     tempType = self.strFixer(line[line.find(":")+1:])
                     isResourceTypeBlock = False
@@ -344,7 +357,7 @@ class map:
             if tempTerrType == "":
                 tempTerrType = "Ore"
             self.resTypes.append( resourceType(int(tempType),tempTerrType ) )
-            print "resType: " + tempType + " terrType: " + tempTerrType
+            print ("resType: " + tempType + " terrType: " + tempTerrType)
         while not self.isdivideable(self.Right):
             self.Right = self.Right + 1;
         while not self.isdivideable(self.Bottom):
